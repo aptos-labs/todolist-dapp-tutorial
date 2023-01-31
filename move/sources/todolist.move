@@ -1,4 +1,4 @@
-module myaddr::main {
+module todolist_addr::todolist {
 
   use aptos_framework::account;
   use std::signer;
@@ -82,7 +82,7 @@ module myaddr::main {
 
   #[test(admin = @0x123)]
   public entry fun test_flow(admin: signer) acquires TodoList {
-    // creates an admin @myaddr account for test
+    // creates an admin @todolist_addr account for test
     account::create_account_for_test(signer::address_of(&admin));
     // initialize contract with admin account 
     create_list(&admin);
@@ -112,7 +112,7 @@ module myaddr::main {
   #[test(admin = @0x123)]
   #[expected_failure(abort_code = E_NOT_INITIALIZED)]
   public entry fun account_can_not_update_task(admin: signer) acquires TodoList {
-    // creates an admin @myaddr account for test
+    // creates an admin @todolist_addr account for test
     account::create_account_for_test(signer::address_of(&admin));
     // account can not toggle task as no list was created
     complete_task(&admin, 2);
