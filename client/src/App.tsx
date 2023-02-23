@@ -39,7 +39,7 @@ function App() {
     try {
       const todoListResource = await client.getAccountResource(
         account?.address,
-        `${moduleAddress}::main::TodoList`
+        `${moduleAddress}::todolist::TodoList`
       );
       setAccountHasList(true);
       // tasks table handle
@@ -52,7 +52,7 @@ function App() {
       while (counter <= taskCounter) {
         const tableItem = {
           key_type: "u64",
-          value_type: `${moduleAddress}::main::Task`,
+          value_type: `${moduleAddress}::todolist::Task`,
           key: `${counter}`,
         };
         const task = await client.getTableItem(tableHandle, tableItem);
@@ -72,7 +72,7 @@ function App() {
     // build a transaction payload to be submited
     const payload = {
       type: "entry_function_payload",
-      function: `${moduleAddress}::main::create_list`,
+      function: `${moduleAddress}::todolist::create_list`,
       type_arguments: [],
       arguments: [],
     };
@@ -96,7 +96,7 @@ function App() {
     // build a transaction payload to be submited
     const payload = {
       type: "entry_function_payload",
-      function: `${moduleAddress}::main::create_task`,
+      function: `${moduleAddress}::todolist::create_task`,
       type_arguments: [],
       arguments: [newTask],
     };
@@ -144,7 +144,7 @@ function App() {
     setTransactionInProgress(true);
     const payload = {
       type: "entry_function_payload",
-      function: `${moduleAddress}::main::complete_task`,
+      function: `${moduleAddress}::todolist::complete_task`,
       type_arguments: [],
       arguments: [taskId],
     };
@@ -249,7 +249,7 @@ function App() {
                       ]}
                     >
                       <List.Item.Meta
-                        title={task.task_id}
+                        title={task.content}
                         description={
                           <a
                             href={`https://explorer.aptoslabs.com/account/${task.address}/`}
